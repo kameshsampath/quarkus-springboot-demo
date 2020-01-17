@@ -11,8 +11,6 @@ import javax.persistence.Id;
 @Entity
 public class Fruit {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     public String name;
     public String season;
