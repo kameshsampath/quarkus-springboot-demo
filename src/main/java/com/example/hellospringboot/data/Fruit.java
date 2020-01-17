@@ -11,7 +11,10 @@ import javax.persistence.Id;
 @Entity
 public class Fruit {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    
     public String name;
     public String season;
 
