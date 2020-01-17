@@ -1,0 +1,17 @@
+version: '3.1'
+services:
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: fruitdb
+      MYSQL_USER: demo
+      MYSQL_PASSWORD: password
+    ports:
+      - 3306:3306
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 9090:8080
