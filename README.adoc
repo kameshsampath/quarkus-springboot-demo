@@ -1,0 +1,26 @@
+= Read Me First
+
+Running this app 
+
+IMPORTANT: update the db as needed
+
+
+== JVM Mode
+
+[source,bash]
+----
+mvn clean package
+java -jar target/hello-springboot-0.0.1-SNAPSHOT-runner.jar
+----
+
+== Native Mode
+
+[source,bash]
+----
+mvn clean package -Pnative
+java -jar target/hello-springboot-0.0.1-SNAPSHOT-runner
+----
+
+
+
+
