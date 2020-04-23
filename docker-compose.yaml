@@ -1,17 +1,17 @@
-version: '3.1'
+version: "3.7"
 services:
-  db:
-    image: mariadb
-    restart: always
+  postgresql:
+    image: quay.io/redhatdemo/openshift-pgsql12-primary
+    ports:
+      - "5432:5432"
     environment:
-      MYSQL_ROOT_PASSWORD: example
-      MYSQL_DATABASE: fruitdb
-      MYSQL_USER: demo
-      MYSQL_PASSWORD: password
-    ports:
-      - 3306:3306
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 9090:8080
+      PG_USER_PASSWORD: password!
+      PG_USER_NAME: demo
+      PG_DATABASE: demodb
+      PG_NETWORK_MASK: all
+      PG_MAX_CONNECTIONS: 100
+      PG_SHARED_BUFFERS: 256
+      PG_WORK_MEM: 1536
+      PG_EFFECTIVE_CACHE_SIZE: 1
+      PG_EFFECTIVE_IO: 128
+      PG_MAX_WAL_SIZE: 1
