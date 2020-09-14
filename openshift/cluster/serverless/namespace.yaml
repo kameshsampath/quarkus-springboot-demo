@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: knative-serving
-  annotations:
-    openshift.io/description: >-
-      Knative Serving Namespace
-    openshift.io/display-name: "knative-serving"
-spec: {}
