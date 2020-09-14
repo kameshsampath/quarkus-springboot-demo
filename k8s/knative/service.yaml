@@ -1,4 +1,3 @@
----
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
@@ -8,7 +7,7 @@ spec:
     spec:
       containerConcurrency: 1
       containers:
-        - image: image-registry.openshift-image-registry.svc:5000/quarkus-springboot-demo/fruits-app
-          imagePullPolicy: Always
-          name: user-container
+      - image: image-registry.openshift-image-registry.svc:5000/quarkus-springboot-demo/fruits-app@sha256:90f5390af44c09b3b14651c6ba7a0cadad4545d88b872bec8cd014cf84cae9d7
+        imagePullPolicy: Always
+        name: user-container
       serviceAccountName: fruits-app-sa
