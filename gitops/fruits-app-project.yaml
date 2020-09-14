@@ -10,8 +10,8 @@ spec:
       kind: Namespace
     - group: rbac.authorization.k8s.io
       kind: "*"
-    - group: project.openshift.io/v1
-      kind: "project"
+    - group: project.openshift.io
+      kind: Project
   description: Quarkus SpringBoot Demo, Fruits App
   destinations:
     - namespace: quarkus-springboot-demo
@@ -23,6 +23,8 @@ spec:
       kind: PersistentVolumeClaim
     - group: ""
       kind: Namespace
+    - group: project.openshift.io
+      kind: Project
     - group: tekton.dev
       kind: "*"
     - group: triggers.tekton.dev

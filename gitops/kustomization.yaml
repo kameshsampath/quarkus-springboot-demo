@@ -7,6 +7,6 @@ resources:
   - fruits-app-project.yaml
   - fruits-app-core.yaml
   - fruits-app-rbac.yaml
-  - fruits-app-db.yaml
+  # - fruits-app-db.yaml
   # - fruits-app-pipelines.yaml
   # - fruits-app-service.yaml
