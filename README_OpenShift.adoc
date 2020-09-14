@@ -66,6 +66,13 @@ oc rollout status -n argocd deploy argocd-openshift-oauth-repo-server
 oc rollout status -n argocd deploy argocd-openshift-oauth-server
 ----
 
+Add 
+
+[source,bash]
+----
+oc adm policy add-cluster-role-to-user cluster-admin -n argocd -z argocd-application-controller
+----
+
 == Deploy Demo
 
 The Application is deployed using Argo CD:
@@ -73,6 +80,16 @@ The Application is deployed using Argo CD:
 [source,bash]
 ----
 oc apply -k gitops
+----
+
+[WARNING]
+====
+The first service deployment will fail as there no image exists in the local repo.
+====
+
+[source,bash]
+----
+oc project quarkus-springboot-demo
 ----
 
 === Spring Boot 
