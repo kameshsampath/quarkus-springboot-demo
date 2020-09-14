@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class GeeterController {
-    
+
     @GetMapping
-    public String hello(){
-        return "Hi from SpringBoot";
+    public String hello() {
+        return "Bonjour de SpringBoot";
     }
-    
+
 }
