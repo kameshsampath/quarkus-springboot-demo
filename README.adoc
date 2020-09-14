@@ -1,13 +1,4 @@
-= Read Me First
+=  Quarkus Spring Boot Demo
 
-Running this app 
-
-IMPORTANT: update the db as needed
-
-[source,bash]
-----
-mvn clean package 
-java -jar target/hello-springboot-0.0.1-SNAPSHOT.jar
-----
-
+#TODO#
 
