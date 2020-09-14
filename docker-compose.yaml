@@ -1,17 +1,16 @@
 version: "3.7"
 services:
+  #https://github.com/kameshsampath/podman-pgsql/tree/master/pgsql12-primary-centos8
   postgresql:
-    image: quay.io/redhatdemo/openshift-pgsql12-primary
+    image: quay.io/rhdevelopers/pgsql12-primary-centos8
     ports:
       - "5432:5432"
     environment:
-      PG_USER_PASSWORD: password!
+      PG_USER_PASSWORD: pa55Word!
       PG_USER_NAME: demo
       PG_DATABASE: demodb
+      PG_REPLICATION_NAME: repl
+      PG_REPLICATION_PASSWORD: replpass
+      PG_MONITOR_NAME: monuser
+      PG_MONITOR_PASSWORD: monpass
       PG_NETWORK_MASK: all
-      PG_MAX_CONNECTIONS: 100
-      PG_SHARED_BUFFERS: 256
-      PG_WORK_MEM: 1536
-      PG_EFFECTIVE_CACHE_SIZE: 1
-      PG_EFFECTIVE_IO: 128
-      PG_MAX_WAL_SIZE: 1
