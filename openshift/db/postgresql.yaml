@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -12,8 +13,16 @@ spec:
         app: postgresql
     spec:
       containers:
-        - name: db
-          image: quay.io/rhdevelopers/pgsql12-primary-centos8
+        - name: postgresql
+          image: quay.io/redhatdemo/openshift-pgsql12-primary:centos7
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "2Gi"
+              cpu: "1"
+          ports:
+            - name: tcp
+              containerPort: 5432
           env:
             - name: PG_USER_PASSWORD
               value: password!
@@ -21,19 +30,29 @@ spec:
               value: demo
             - name: PG_DATABASE
               value: demodb
-            - name: PG_REPLICATION_NAME
-              value: repl
-            - name: PG_REPLICATION_PASSWORD
-              value: replpass
-            - name: PG_MONITOR_NAME
-              value: monuser
-            - name: PG_MONITOR_PASSWORD
-              value: monpass
             - name: PG_NETWORK_MASK
               value: all
-          resources:
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
-          ports:
-            - containerPort: 5432
+            - name: PG_MAX_CONNECTIONS
+              value: "100"
+            - name: PG_SHARED_BUFFERS
+              value: "250"
+            - name: PG_WORK_MEM
+              value: "128"
+            - name: PG_EFFECTIVE_CACHE_SIZE
+              value: "750"
+            - name: PG_EFFECTIVE_IO
+              value: "128"
+            - name: PG_MAX_WAL_SIZE
+              value: "4"
+          volumeMounts:
+            - mountPath: /pgdata
+              name: pgdata
+            - mountPath: /pgwal
+              name: pgwal
+      volumes:
+        - name: pgdata
+          persistentVolumeClaim:
+            claimName: pgdata-pvc
+        - name: pgwal
+          persistentVolumeClaim:
+            claimName: pgwal-pvc
