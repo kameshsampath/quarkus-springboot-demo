@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: argocd
+  annotations:
+    openshift.io/description: >-
+      Argo CD Namespace
+    openshift.io/display-name: "argocd"
+spec: {}

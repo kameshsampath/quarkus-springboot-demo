@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../core
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+  - name: maven-settings
+    behavior: create
+    files:
+      - settings.xml
+
+resources:
+  - nexus.yaml
+  - pvcs.yaml
+  - ksvc-deploy.yaml
+  - image-updater.yaml
+  - fruits-app-trigger-template.yaml
+  - fruits-app-github-webhook.yaml
+  - fruits-app-github-triggerbindings.yaml
+  - route-fruits-app-github-webhook.yaml

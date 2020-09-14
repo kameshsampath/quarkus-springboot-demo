@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../core
+
+resources:
+  - quarkus-springboot-demo.yaml
+  - tekton-triggers-admin.yaml
+  - tekton-triggers-admin.yaml

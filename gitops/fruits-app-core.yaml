@@ -1,0 +1,17 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: fruits-app-core
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: fruits-app
+  source:
+    path: core
+    repoURL: https://github.com/kameshsampath/quarkus-springboot-demo
+    targetRevision: HEAD

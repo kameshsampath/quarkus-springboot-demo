@@ -1,0 +1,14 @@
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: hybrid-cloud-backend
+spec:
+  template:
+    spec:
+      containerConcurrency: 1
+      containers:
+        - image: image-registry.openshift-imageregistry.svc:5000/quarkus-springboot-demo/fruits-app
+          imagePullPolicy: Always
+          name: user-container
+      serviceAccountName: fruits-app-sa

@@ -1,0 +1,80 @@
+= Quarkus Spring Boot Demo
+
+Demonstrate Quarkus Spring Boot demo. This README details how to deploy the demo *Cloud Native* on to a https://try.openshift.com[OpenShift] cluster.
+
+
+== Pre-requisites
+
+- OpenShift4 Cluster
+- OpenShift Serverless (Knative)
+- OpenShift Pipelines (Tektoncd)
+- ArgoCD
+
+== Prepare Cluster
+
+=== Depoloy OpenShift Serverless
+
+[source,bash]
+----
+oc apply -k openshift/cluster/serverless
+----
+
+Wait for OpenShift Serverless components to be up and running, check the status using the command:
+
+[source,bash]
+----
+oc rollout status -n knative-serving activator
+oc rollout status -n knative-serving autoscaler
+oc rollout status -n knative-serving autoscaler-hpa
+oc rollout status -n knative-serving controller
+oc rollout status -n knative-serving webhook
+----
+
+=== Depoloy OpenShift Pipelines
+
+[source,bash]
+----
+oc apply -k openshift/cluster/pipelines
+----
+
+Wait for OpenShift Pipelines components to be up and running, check the status using the command:
+
+[source,bash]
+----
+oc rollout status -n openshift-pipelines deploy tekton-pipelines-controller
+oc rollout status -n openshift-pipelines deploy tekton-pipelines-webhook
+oc rollout status -n openshift-pipelines deploy tekton-triggers-controller
+oc rollout status -n openshift-pipelines deploy tekton-triggers-webhook
+----
+
+=== Deploy Argo CD
+
+[source,bash]
+----
+oc apply -k openshift/cluster/argocd
+----
+
+Wait for Argo CD components to be up and running, check the status using the command:
+
+[source,bash]
+----
+oc rollout status -n argocd deploy argocd-operator
+oc rollout status -n argocd deploy argocd-openshift-oauth-application-controller
+oc rollout status -n argocd deploy argocd-openshift-oauth-dex-server
+oc rollout status -n argocd deploy argocd-openshift-oauth-redis
+oc rollout status -n argocd deploy argocd-openshift-oauth-repo-server
+oc rollout status -n argocd deploy argocd-openshift-oauth-server
+----
+
+== Deploy Demo
+
+The Application is deployed using Argo CD:
+
+[source,bash]
+----
+oc apply -k gitops
+----
+
+=== Spring Boot 
+
+=== Quarkus Spring Boot

@@ -1,0 +1,15 @@
+---
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: fruits-app-github-webhook
+  labels:
+    app: github
+spec:
+  serviceAccountName: pipeline
+  triggers:
+    - name: fruits-app-github-webhook
+      bindings:
+        - name: fruits-app-triggerbinding
+      template:
+        name: fruits-app-ksvc-trigger-template

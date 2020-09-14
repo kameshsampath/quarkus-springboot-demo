@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresql
+spec:
+  selector:
+    matchLabels:
+      app: postgresql
+  template:
+    metadata:
+      labels:
+        app: postgresql
+    spec:
+      containers:
+        - name: db
+          image: quay.io/rhdevelopers/pgsql12-primary-centos8
+          env:
+            - name: PG_USER_PASSWORD
+              value: password!
+            - name: PG_USER_NAME
+              value: demo
+            - name: PG_DATABASE
+              value: demodb
+            - name: PG_REPLICATION_NAME
+              value: repl
+            - name: PG_REPLICATION_PASSWORD
+              value: replpass
+            - name: PG_MONITOR_NAME
+              value: monuser
+            - name: PG_MONITOR_PASSWORD
+              value: monpass
+            - name: PG_NETWORK_MASK
+              value: all
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 5432
