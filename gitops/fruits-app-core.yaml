@@ -5,13 +5,13 @@ metadata:
   name: fruits-app-core
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: argocd
+    namespace: quarkus-springboot-demo
     server: https://kubernetes.default.svc
   project: fruits-app
   source:
-    path: core
+    path: openshift/core
     repoURL: https://github.com/kameshsampath/quarkus-springboot-demo
     targetRevision: HEAD
