@@ -25,6 +25,8 @@ spec:
       kind: Namespace
     - group: project.openshift.io
       kind: Project
+    - group: route.openshift.io
+      kind: Route
     - group: tekton.dev
       kind: "*"
     - group: triggers.tekton.dev

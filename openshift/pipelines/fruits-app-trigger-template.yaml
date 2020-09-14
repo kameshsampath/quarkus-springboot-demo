@@ -21,8 +21,6 @@ spec:
           tekton.dev/pipeline: ksvc-deploy
       spec:
         params:
-          - name: APP_NAME
-            value: fruits-app
           - name: GITHUB_REPO_URL
             value: $(params.gitrepositoryurl)
           - name: GITHUB_REPO_REVISION

@@ -11,5 +11,6 @@ spec:
     - name: fruits-app-github-webhook
       bindings:
         - name: fruits-app-triggerbinding
+          ref: fruits-app-triggerbinding
       template:
         name: fruits-app-ksvc-trigger-template
