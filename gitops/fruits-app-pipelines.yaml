@@ -11,6 +11,10 @@ spec:
     namespace: quarkus-springboot-demo
     server: https://kubernetes.default.svc
   project: fruits-app
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
   source:
     path: openshift/pipelines
     repoURL: https://github.com/kameshsampath/quarkus-springboot-demo
