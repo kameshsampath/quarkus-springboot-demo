@@ -15,8 +15,8 @@ spec:
       default: https://github.com/kameshsampath/quarkus-springboot-demo
     - name: GITHUB_REPO_REVISION
       description: >-
-        The GitHub revision to use
-      default: db
+        The GitHub revision to use, defaults to master
+      default: master
     - name: IMAGE_NAME
       description: >-
         The fully qualified image name e.g example.com/tekton-tutorial/helloworld
@@ -41,20 +41,21 @@ spec:
       workspaces:
         - name: output
           workspace: source
-    - name: maven-test
-      taskRef:
-        name: maven
-        kind: ClusterTask
-      runAfter:
-        - clone-sources
-      params:
-        - name: GOALS
-          value: ["-B", "clean", "test"]
-      workspaces:
-        - name: maven-settings
-          workspace: maven-settings
-        - name: source
-          workspace: source
+    # Enable this task if you need to add Test
+    # - name: maven-test
+    #   taskRef:
+    #     name: maven
+    #     kind: ClusterTask
+    #   runAfter:
+    #     - clone-sources
+    #   params:
+    #     - name: GOALS
+    #       value: ["-B", "clean", "test"]
+    #   workspaces:
+    #     - name: maven-settings
+    #       workspace: maven-settings
+    #     - name: source
+    #       workspace: source
     - name: maven-package
       taskRef:
         name: maven
