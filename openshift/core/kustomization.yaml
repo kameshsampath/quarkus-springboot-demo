@@ -9,4 +9,4 @@ commonLabels:
   app.kubernetes.io/part-of: quarkus-springboot-demo
 
 resources:
-  - namespace.yaml
+  - project.yaml

@@ -1,9 +1,11 @@
-apiVersion: v1
-kind: Namespace
+apiVersion: project.openshift.io/v1
+kind: Project
 metadata:
   name: quarkus-springboot-demo
   annotations:
     openshift.io/description: >-
       Serverless Quarkus/SpringBoot Demo uses Pipelines and Argocd.
     openshift.io/display-name: "Quarkus Spring Boot Demo"
-spec: {}
+spec:
+  finalizers:
+    - kubernetes
