@@ -5,6 +5,6 @@ bases:
   - ../core
 
 resources:
+  - tekton-triggers-admin.yaml
+  - tekton-triggers-webhook.yaml
   - quarkus-springboot-demo.yaml
-  - tekton-triggers-admin.yaml
-  - tekton-triggers-admin.yaml
