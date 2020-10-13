@@ -4,7 +4,7 @@
   <groupId>com.example</groupId>
   <artifactId>fruits-app</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>demo</name>
+  <name>quarkus-sb-app</name>
   <description>Demo project for Quarkus-Spring Boot</description>
   <properties>
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
