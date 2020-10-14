@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * GeeterController
+ * GreeterController
  */
 @RestController
-public class GeeterController {
+public class GreeterController {
 
   @GetMapping
   public String hello() {
