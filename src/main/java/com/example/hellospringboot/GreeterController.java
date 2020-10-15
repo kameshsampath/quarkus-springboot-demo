@@ -11,7 +11,7 @@ public class GreeterController {
 
     @GetMapping
     public String hello() {
-        return "Hi SpringBoot";
+        return "Hello SpringBoot!";
     }
 
 }
