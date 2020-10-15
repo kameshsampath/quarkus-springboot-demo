@@ -11,7 +11,7 @@ public class GreeterController {
 
   @GetMapping
   public String hello() {
-    return "Hi Quarkus";
+    return "Hello Quarkus";
   }
 
 }
