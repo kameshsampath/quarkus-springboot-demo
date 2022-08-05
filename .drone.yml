@@ -47,6 +47,7 @@ steps:
         --insecure
         --skip-tls-verify
     environment:
+      container: docker
       DESTINATION_IMAGE:
         from_secret: destination_image
     volumes:
