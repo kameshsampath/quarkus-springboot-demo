@@ -71,16 +71,24 @@ java -jar target/quarkus-app/quarkus-run.jar
 ```shell
 mvn package -Pnative
 ./target/fruits-app
+```
+
+## Testing the application Locally
+
 ```shell
+docker-compose up -d 
+```
 
-## Testing the application
-
-Now open the url http://localhost:8080/api/all to see the list of fruits.
+Now open the url <http://localhost:8080/api/all> to see the list of fruits.
 
 Test adding a fruit:
 
 ```shell
-httpie locahost:8080/api/add name=jackfruit=season=summer
+http localhost:8080/api/add name=jackfruit season=summer
 ```
 
-You can check the list of fruits again using http://localhost:8080/api/all.
+You can check the list of fruits again using <http://localhost:8080/api/all>.
+
+## Testing with Kubernetes
+
+To test the application with Kubernetes use the <https://github.com/kameshsampath/dag-stack>, that will rely use GitOps Principles to deploy the application.

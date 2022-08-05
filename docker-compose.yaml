@@ -1,16 +1,19 @@
 version: "3.7"
 services:
-  #https://github.com/kameshsampath/podman-pgsql/tree/master/pgsql12-primary-centos8
   postgresql:
-    image: quay.io/rhdevelopers/pgsql12-primary-centos8
+    image: postgres:14.4-alpine
     ports:
       - "5432:5432"
     environment:
-      PG_USER_PASSWORD: pa55Word!
-      PG_USER_NAME: demo
-      PG_DATABASE: demodb
-      PG_REPLICATION_NAME: repl
-      PG_REPLICATION_PASSWORD: replpass
-      PG_MONITOR_NAME: monuser
-      PG_MONITOR_PASSWORD: monpass
-      PG_NETWORK_MASK: all
+      POSTGRES_PASSWORD: password!
+      POSTGRES_USER: demo
+      POSTGRES_DB: demodb
+  fruits-api:
+    depends_on:
+      - postgresql
+    # you can also use the sha256 of the pushed image 
+    # check the drone logs to see the sha
+    # e.g. localhost:5001/example/quarkus-springboot-demo@sha256:cd66b83ff652a0346560cdd99d3376f08d1ebdcbeba78a84b307d23cdf93c3f8 
+    image: localhost:5001/example/quarkus-springboot-demo
+    ports:
+      - "8080:8080"
