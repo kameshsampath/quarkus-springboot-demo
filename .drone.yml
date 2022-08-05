@@ -1,0 +1,21 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+# remove this section if your CPU is amd64
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+  - name: ensure nexus is available
+    image: alpine
+    pull: if-not-exists
+    commands:
+      - apk update
+      - apk add curl bash
+      - if [ "$(curl -s -w '%{http_code}' http://nexus3.infra:8081/nexus/ )" = "200" ]; then exit 0; else exit 1; fi
+    environment:
+       MAVEN_MIRROR_URL:
+          from_secret: maven_mirror_url
