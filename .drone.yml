@@ -31,13 +31,40 @@ steps:
         - -DskipTests
         - clean
         - install
-          
+  # Step 3
+  - name: build-image
+    image: gcr.io/kaniko-project/executor:debug
+    pull: if-not-exists
+    commands:
+      - >
+        /kaniko/executor
+        --context /drone/src
+        --dockerfile Dockerfile 
+        --customPlatform=linux/amd64
+        --customPlatform=linux/arm64
+        --destination $DESTINATION_IMAGE
+        --digest-file /tmp/images/image-digest
+        --insecure
+        --skip-tls-verify
+    environment:
+      DESTINATION_IMAGE:
+        from_secret: destination_image
+    volumes:
+      - name: digest-folder
+        path: /tmp/images
 
+# Trigger only main
 trigger:
   branch:
   - main
 
+# Ensuring the local gitea is reachable
 host_aliases:
+   # IMPORTANT: update to match your settings
  - ip: 10.96.137.81
    hostnames:
      - gitea-127.0.0.1.sslip.io
+
+volumes:
+  - name: digest-folder
+    temp: {}

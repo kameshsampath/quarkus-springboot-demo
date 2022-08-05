@@ -30,7 +30,8 @@ __IMPORTAN__: Activate the quarkus-springboot-demo project on Drone.
 ### Add Secrets to Repository
 
 ```shell
-drone secret add --name maven_mirror_url --data 'http://nexus3.infra:8081/nexus/repository/maven-public/' user-01/quarkus-springboot-demo
+drone secret add --name maven_mirror_url --data 'http://nexus3.infra:8081/repository/maven-public/' user-01/quarkus-springboot-demo
+drone secret add --name destination_image --data 'kind-registry:5000/example/quarkus-springboot-demo' user-01/quarkus-springboot-demo
 ```
 
 ## Run Locally
