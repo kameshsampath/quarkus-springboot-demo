@@ -15,6 +15,9 @@ Copy Account settings from Drone,
 ```shell
 export DRONE_SERVER=http://drone-127.0.0.1.sslip.io:30980
 export DRONE_TOKEN=<some token value>
+export REGISTRY_NAME=myregistry.localhost
+export REGISTRY_PORT=5001
+export GITEA_USERNAME=user-01
 ```
 
 Ensure the token works,
@@ -30,8 +33,8 @@ __IMPORTAN__: Activate the quarkus-springboot-demo project on Drone.
 ### Add Secrets to Repository
 
 ```shell
-drone secret add --name maven_mirror_url --data 'http://nexus3.infra:8081/repository/maven-public/' user-01/quarkus-springboot-demo
-drone secret add --name destination_image --data 'kind-registry:5000/example/quarkus-springboot-demo' user-01/quarkus-springboot-demo
+drone secret add --name maven_mirror_url --data 'http://localhost:8082/artifactory/libs-all/' "${GITEA_USERNAME}/quarkus-springboot-demo"
+drone secret add --name destination_image --data "${REGISTRY_NAME}:${REGISTRY_PORT}/example/quarkus-springboot-demo" "${GITEA_USERNAME}/quarkus-springboot-demo"
 ```
 
 ## Run Locally

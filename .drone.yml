@@ -16,7 +16,7 @@ steps:
     commands:
       - apk update
       - apk add curl bash
-      - if [ "$(curl -o /dev/null -s -w '%{http_code}' $MAVEN_MIRROR_URL )" = "200" ]; then exit 0; else exit 1; fi
+      - if [ "$(curl -o /dev/null -s -w '%{http_code}' $MAVEN_MIRROR_URL )" -eq 200 ]; then exit 0; else exit 1; fi
     environment:
        MAVEN_MIRROR_URL:
           from_secret: maven_mirror_url
