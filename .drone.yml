@@ -35,10 +35,14 @@ steps:
   - name: build-image
     image: plugins/docker
     pull: if-not-exists
+    privileged: true
     settings:
       insecure: true
       repo:
         from_secret: destination_image
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
 
 # Trigger only main
 trigger:
@@ -51,3 +55,7 @@ host_aliases:
  - ip: 10.43.103.152
    hostnames:
      - gitea-127.0.0.1.sslip.io
+
+volumes:
+  - name: dockersock
+    path: /var/run/docker.sock
