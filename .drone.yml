@@ -35,7 +35,6 @@ steps:
   - name: build-image
     image: plugins/docker
     pull: if-not-exists
-    privileged: true
     settings:
       insecure: true
       repo:
