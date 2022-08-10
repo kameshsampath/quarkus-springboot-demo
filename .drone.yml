@@ -10,7 +10,7 @@ platform:
 
 steps:
   # Step 1
-  - name: ensure nexus is available
+  - name: ensure artifactory is available
     image: alpine
     pull: if-not-exists
     commands:
@@ -62,7 +62,7 @@ trigger:
 # Ensuring the local gitea is reachable
 host_aliases:
    # IMPORTANT: update to match your settings
- - ip: 10.96.137.81
+ - ip: 10.43.103.152
    hostnames:
      - gitea-127.0.0.1.sslip.io
 
