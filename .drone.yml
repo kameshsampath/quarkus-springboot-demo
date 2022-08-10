@@ -33,26 +33,12 @@ steps:
         - install
   # Step 3
   - name: build-image
-    image: gcr.io/kaniko-project/executor:debug
+    image: plugins/docker
     pull: if-not-exists
-    commands:
-      - >
-        /kaniko/executor
-        --context /drone/src
-        --dockerfile Dockerfile 
-        --customPlatform=linux/amd64
-        --customPlatform=linux/arm64
-        --destination $DESTINATION_IMAGE
-        --digest-file /tmp/images/image-digest
-        --insecure
-        --skip-tls-verify
-    environment:
-      container: docker
-      DESTINATION_IMAGE:
+    settings:
+      insecure: true
+      repo:
         from_secret: destination_image
-    volumes:
-      - name: digest-folder
-        path: /tmp/images
 
 # Trigger only main
 trigger:
@@ -65,7 +51,3 @@ host_aliases:
  - ip: 10.43.103.152
    hostnames:
      - gitea-127.0.0.1.sslip.io
-
-volumes:
-  - name: digest-folder
-    temp: {}
