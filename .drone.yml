@@ -40,14 +40,14 @@ steps:
       tags: "latest" 
       dockerfile: Dockerfile
       insecure: true
-      username:
-        from_secret: image_registry_user
-      password:
-        from_secret: image_registry_password
-      registry:
-        from_secret: image_registry
-      repo:
-        from_secret: destination_image
+      username: admin
+        # from_secret: image_registry_user
+      password: admin123
+        # from_secret: image_registry_password
+      registry: nexus.infra.svc.cluster.local:31081
+        # from_secret: image_registry
+      repo: example/test
+        # from_secret: destination_image
   
 
 # Trigger only main
