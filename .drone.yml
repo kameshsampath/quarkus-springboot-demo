@@ -39,37 +39,16 @@ steps:
       auto_tag_suffix: linux-arm64
       tags: "latest" 
       dockerfile: Dockerfile
-      # daemon_off: true
       insecure: true
-      username: admin
-        # from_secret: image_registry_user
-      password: admin123
-        # from_secret: image_registry_password
-      registry: nexus.infra:18081
-        # from_secret: image_registry
-      repo: nexus.infra:18081/example/quarkus-springboot-demo
-        # from_secret: destination_image
-  # - name: build-image
-  #   image: gcr.io/kaniko-project/executor:debug
-  #   pull: if-not-exists
-  #   commands:
-  #     - >
-  #       /kaniko/executor
-  #       --context /drone/src
-  #       --dockerfile Dockerfile 
-  #       --customPlatform=linux/amd64
-  #       --customPlatform=linux/arm64
-  #       --destination $DESTINATION_IMAGE
-  #       --digest-file /tmp/images/image-digest
-  #       --insecure
-  #       --skip-tls-verify
-  #   environment:
-  #     container: docker
-  #     DESTINATION_IMAGE:
-  #       from_secret: destination_image
-  #   volumes:
-  #     - name: digest-folder
-  #       path: /tmp/images
+      username:
+        from_secret: image_registry_user
+      password:
+        from_secret: image_registry_password
+      registry:
+        from_secret: image_registry
+      repo:
+        from_secret: destination_image
+  
 
 # Trigger only main
 trigger:
