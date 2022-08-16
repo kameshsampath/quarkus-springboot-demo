@@ -44,7 +44,7 @@ steps:
         # from_secret: image_registry_user
       password: admin123
         # from_secret: image_registry_password
-      registry: nexus.infra.svc.cluster.local:31081
+      registry: nexus.infra.svc.cluster.local:18081
         # from_secret: image_registry
       repo: example/test
         # from_secret: destination_image
