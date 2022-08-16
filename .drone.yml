@@ -59,7 +59,7 @@ trigger:
 host_aliases:
    # IMPORTANT: update to match your settings
    # export GITEA_HTTP_CLUSTER_IP=$(kubectl get -n default svc gitea-http -ojsonpath='{.spec.clusterIP}')
- - ip: 10.43.227.16
+ - ip: 10.43.15.232
    hostnames:
      - gitea-127.0.0.1.sslip.io
 
