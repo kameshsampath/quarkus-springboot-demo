@@ -44,9 +44,9 @@ steps:
         # from_secret: image_registry_user
       password: admin123
         # from_secret: image_registry_password
-      registry: nexus.infra.svc.cluster.local:18081
+      registry: nexus.infra.svc.cluster.local
         # from_secret: image_registry
-      repo: nexus.infra.svc.cluster.local:18081/example/test
+      repo: nexus.infra.svc.cluster.local/example/quarkus-springboot-demo
         # from_secret: destination_image
   
 
@@ -59,10 +59,6 @@ trigger:
 host_aliases:
    # IMPORTANT: update to match your settings
    # export GITEA_HTTP_CLUSTER_IP=$(kubectl get -n default svc gitea-http -ojsonpath='{.spec.clusterIP}')
- - ip: 10.43.15.232
+ - ip: 10.43.99.186
    hostnames:
      - gitea-127.0.0.1.sslip.io
-
-volumes:
-  - name: digest-folder
-    temp: {}
