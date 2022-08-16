@@ -10,7 +10,7 @@ platform:
 
 steps:
   # Step 1
-  - name: ensure artifactory is available
+  - name: ensure nexus is available
     image: alpine
     pull: if-not-exists
     commands:
@@ -32,27 +32,45 @@ steps:
         - clean
         - install
   # Step 3
-  - name: build-image
-    image: gcr.io/kaniko-project/executor:debug
+  - name: publish
+    image: plugins/docker:20.13
     pull: if-not-exists
-    commands:
-      - >
-        /kaniko/executor
-        --context /drone/src
-        --dockerfile Dockerfile 
-        --customPlatform=linux/amd64
-        --customPlatform=linux/arm64
-        --destination $DESTINATION_IMAGE
-        --digest-file /tmp/images/image-digest
-        --insecure
-        --skip-tls-verify
-    environment:
-      container: docker
-      DESTINATION_IMAGE:
-        from_secret: destination_image
-    volumes:
-      - name: digest-folder
-        path: /tmp/images
+    settings:
+      auto_tag: false
+      auto_tag_suffix: linux-arm64
+      tags: "latest" 
+      dockerfile: Dockerfile
+      # daemon_off: true
+      insecure: true
+      username: admin
+        # from_secret: image_registry_user
+      password: admin123
+        # from_secret: image_registry_password
+      registry: nexus.infra:18081
+        # from_secret: image_registry
+      repo: example/quarkus-springboot-demo
+        # from_secret: destination_image
+  # - name: build-image
+  #   image: gcr.io/kaniko-project/executor:debug
+  #   pull: if-not-exists
+  #   commands:
+  #     - >
+  #       /kaniko/executor
+  #       --context /drone/src
+  #       --dockerfile Dockerfile 
+  #       --customPlatform=linux/amd64
+  #       --customPlatform=linux/arm64
+  #       --destination $DESTINATION_IMAGE
+  #       --digest-file /tmp/images/image-digest
+  #       --insecure
+  #       --skip-tls-verify
+  #   environment:
+  #     container: docker
+  #     DESTINATION_IMAGE:
+  #       from_secret: destination_image
+  #   volumes:
+  #     - name: digest-folder
+  #       path: /tmp/images
 
 # Trigger only main
 trigger:
