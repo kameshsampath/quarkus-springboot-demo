@@ -47,7 +47,7 @@ steps:
         # from_secret: image_registry_password
       registry: nexus.infra:18081
         # from_secret: image_registry
-      repo: example/quarkus-springboot-demo
+      repo: nexus.infra:18081/example/quarkus-springboot-demo
         # from_secret: destination_image
   # - name: build-image
   #   image: gcr.io/kaniko-project/executor:debug
