@@ -1,6 +1,6 @@
-# Quarkus Spring Boot Demo
+# Java CI with Drone
 
-A simple CRUD application demonstration using vanilla SpringBoot and Quarkized Spring Boot.
+The demo application that can be used to demonstrate on how to do CI with Java Applications with Drone CI. This project plays well with used with [Java GitOps Demo with Argo CD](https://github.com/kameshsampath/quarkus-springboot-demo-gitops).
 
 ## Prerequisites
 
@@ -8,10 +8,9 @@ A simple CRUD application demonstration using vanilla SpringBoot and Quarkized S
 - [httpie](https://httpie.org/)
 - [Drone CLI](https://docs.drone.io/cli/install/)
 
+## Setup DAG Stack
 
-Setup the DAG Stack as described in,
-
-<https://github.com/kameshsampath/dag-stack.git>
+You need a environment that can help you do CI and GitOps. You can setup one locally as described here <https://github.com/kameshsampath/dag-stack.git>.
 
 ## Drone Configuration
 
@@ -34,14 +33,11 @@ Ensure the token works,
 drone info
 ```
 
-The command above should display the git(gitea) user and password
-
 __IMPORTANT__: Activate the `quarkus-springboot-demo` project on Drone.
 
 ### Add Secrets to Repository
 
 ```shell
-
 drone secret add --name maven_mirror_url --data 'http://nexus.infra:8081/repository/maven-public/' "${GITEA_USERNAME}/quarkus-springboot-demo"
 
 drone secret add --name destination_image --data "${REGISTRY_NAME}:${REGISTRY_PORT}/example/quarkus-springboot-demo" "${GITEA_USERNAME}/quarkus-springboot-demo"
@@ -52,6 +48,12 @@ drone secret add --name image_registry_user --data "${IMAGE_REGISTRY_USER}" "${G
 
 drone secret add --name image_registry_password --data "${IMAGE_REGISTRY_PASSWORD}" "${GITEA_USERNAME}/quarkus-springboot-demo"
 ```
+
+## Testing with Kubernetes
+
+To test the application with Kubernetes use the <https://github.com/kameshsampath/dag-stack>, that will rely use GitOps Principles to deploy the application
+
+## Testing the application Locally
 
 ## Run Locally
 
@@ -92,7 +94,6 @@ mvn package -Pnative
 ./target/fruits-app
 ```
 
-## Testing the application Locally
 
 ```shell
 docker-compose up -d 
@@ -107,7 +108,4 @@ http localhost:8080/api/add name=jackfruit season=summer
 ```
 
 You can check the list of fruits again using <http://localhost:8080/api/all>.
-
-## Testing with Kubernetes
-
-To test the application with Kubernetes use the <https://github.com/kameshsampath/dag-stack>, that will rely use GitOps Principles to deploy the application.
+.
