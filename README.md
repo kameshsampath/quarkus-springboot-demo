@@ -8,6 +8,11 @@ A simple CRUD application demonstration using vanilla SpringBoot and Quarkized S
 - [httpie](https://httpie.org/)
 - [Drone CLI](https://docs.drone.io/cli/install/)
 
+
+Setup the DAG Stack as described in,
+
+<https://github.com/kameshsampath/dag-stack.git>
+
 ## Drone Configuration
 
 Copy Account settings from Drone,
@@ -15,8 +20,11 @@ Copy Account settings from Drone,
 ```shell
 export DRONE_SERVER=http://drone-127.0.0.1.sslip.io:30980
 export DRONE_TOKEN=<some token value>
-export REGISTRY_NAME=myregistry.localhost
-export REGISTRY_PORT=5001
+export REGISTRY_NAME=nexus.infra
+# always 18081 for in cluster push and pull
+export REGISTRY_PORT=18081
+export IMAGE_REGISTRY_USER=admin
+export IMAGE_REGISTRY_PASSWORD=admin123
 export GITEA_USERNAME=user-01
 ```
 
@@ -28,13 +36,21 @@ drone info
 
 The command above should display the git(gitea) user and password
 
-__IMPORTAN__: Activate the quarkus-springboot-demo project on Drone.
+__IMPORTANT__: Activate the `quarkus-springboot-demo` project on Drone.
 
 ### Add Secrets to Repository
 
 ```shell
-drone secret add --name maven_mirror_url --data 'http://localhost:8082/artifactory/libs-all/' "${GITEA_USERNAME}/quarkus-springboot-demo"
+
+drone secret add --name maven_mirror_url --data 'http://nexus.infra:8081/repository/maven-public/' "${GITEA_USERNAME}/quarkus-springboot-demo"
+
 drone secret add --name destination_image --data "${REGISTRY_NAME}:${REGISTRY_PORT}/example/quarkus-springboot-demo" "${GITEA_USERNAME}/quarkus-springboot-demo"
+
+drone secret add --name image_registry --data "${REGISTRY_NAME}:${REGISTRY_PORT}" "${GITEA_USERNAME}/quarkus-springboot-demo"
+
+drone secret add --name image_registry_user --data "${IMAGE_REGISTRY_USER}" "${GITEA_USERNAME}/quarkus-springboot-demo"
+
+drone secret add --name image_registry_password --data "${IMAGE_REGISTRY_PASSWORD}" "${GITEA_USERNAME}/quarkus-springboot-demo"
 ```
 
 ## Run Locally
