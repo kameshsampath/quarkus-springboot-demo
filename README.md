@@ -14,17 +14,13 @@ You need a environment that can help you do CI and GitOps. You can setup one loc
 
 ## Drone Configuration
 
-Copy Account settings from Drone,
+Switch to tab **Terminal 2**,
+
+Copy Account settings from Drone Account settings page, then create a new file called `.envrc.local` and add the variables to override,
 
 ```shell
-export DRONE_SERVER=http://drone-127.0.0.1.sslip.io:30980
-export DRONE_TOKEN=<some token value>
-export REGISTRY_NAME=nexus.infra
-# always 18081 for in cluster push and pull
-export REGISTRY_PORT=18081
-export IMAGE_REGISTRY_USER=admin
-export IMAGE_REGISTRY_PASSWORD=admin123
-export GITEA_USERNAME=user-01
+export DRONE_SERVER="http://kubernetes-vm.${_SANDBOX_ID}.sslip.io:30980"
+export DRONE_TOKEN="drone token from the drone account settings page"
 ```
 
 Ensure the token works,
@@ -33,9 +29,23 @@ Ensure the token works,
 drone info
 ```
 
-__IMPORTANT__: Activate the `quarkus-springboot-demo` project on Drone.
+Now activate the `quarkus-springboot-demo` in Drone,
 
-### Add Secrets to Repository
+```shell
+drone repo activate "${QUARKUS_SPRINGBOOT_DEMO_GIT_REPO}"
+```
+
+### Add Secrets to Drone Repository
+
+The application build uses few secrets namely,
+
+- `maven_mirror_url` : The maven mirror to used by Apache Maven builder to download the artifacts.
+- `destination_image`: The container image name. Default to `${REGISTRY_NAME}/example/quarkus-springboot-demo`.
+- `image_registry`: The Image registry to use. Derived from environment variable `${REGISTRY_NAME}`.
+- `image_registry_user`: The Image registry username to authenticate. Defaults `admin`.
+- `image_registry_password`: The Image registry user password to be used while authentication authenticate. Defaults to `admin123`.
+
+Run the following script to add the secrets to the Drone repo `${QUARKUS_SPRINGBOOT_DEMO_GIT_REPO}`,
 
 ```shell
 ./scripts/add-secrets.sh
@@ -55,7 +65,7 @@ __IMPORTANT__: Activate the `quarkus-springboot-demo` project on Drone.
 
 ## Testing with Kubernetes
 
-To test the application with Kubernetes use the <https://github.com/kameshsampath/dag-stack>, that will rely use GitOps Principles to deploy the application
+To test the application with Kubernetes use the <https://github.com/kameshsampath/dag-stack>, that will rely use GitOps principles to deploy the application.
 
 ## Testing the application Locally
 

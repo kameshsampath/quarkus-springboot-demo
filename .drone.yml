@@ -3,22 +3,21 @@ kind: pipeline
 type: kubernetes
 name: default
 
-# remove this section if your CPU is amd64
 platform:
   os: linux
-  arch: arm64
+  arch: amd64
 
 steps:
   # Step 1
-  # - name: ensure nexus is available
-  #   image: alpine
-  #   pull: if-not-exists
-  #   commands:
-  #     - apk update
-  #     - apk add curl bash
-  #     - until [ "$(curl -o /dev/null -s -w '%{http_code}' $MAVEN_MIRROR_URL )" -eq 200 ]; do sleep 5;echo "."; done
-  #   environment:
-  #      MAVEN_MIRROR_URL: "http://nexus.infra:8081/repository/maven-public/"
+  - name: ensure nexus is available
+    image: alpine
+    pull: if-not-exists
+    commands:
+      - apk update
+      - apk add curl bash
+      - until [ "$(curl -o /dev/null -s -w '%{http_code}' $MAVEN_MIRROR_URL )" -eq 200 ]; do sleep 5;echo "."; done
+    environment:
+       MAVEN_MIRROR_URL: "http://nexus.infra:8081/repository/maven-public/"
   # Step 2
   - name: java-build
     image: kameshsampath/drone-java-maven-plugin:v1.0.3
@@ -35,30 +34,23 @@ steps:
     image: plugins/docker:20.13
     pull: if-not-exists
     settings:
-      auto_tag: false
-      auto_tag_suffix: linux-arm64
       tags: "latest" 
       dockerfile: Dockerfile
       insecure: true
-      username: admin
-        # from_secret: image_registry_user
-      password: admin123
-        # from_secret: image_registry_password
-      registry: nexus.infra.svc.cluster.local
-        # from_secret: image_registry
-      repo: nexus.infra.svc.cluster.local/example/quarkus-springboot-demo
-        # from_secret: destination_image
+      # on instruqt platform check the mtu value of cni nic and
+      # ensure this value matches that 
+      mtu: 1410
+      username:
+        from_secret: image_registry_user
+      password:
+        from_secret: image_registry_password
+      registry:
+        from_secret: image_registry
+      repo:
+        from_secret: destination_image
   
 
 # Trigger only main
 trigger:
   branch:
   - main
-
-# Ensuring the local gitea is reachable
-host_aliases:
-   # IMPORTANT: update to match your settings
-   # export GITEA_HTTP_CLUSTER_IP=$(kubectl get -n default svc gitea-http -ojsonpath='{.spec.clusterIP}')
- - ip: 10.43.99.186
-   hostnames:
-     - gitea-127.0.0.1.sslip.io
